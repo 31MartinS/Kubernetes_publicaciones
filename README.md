@@ -31,15 +31,18 @@ Este proyecto implementa una arquitectura de microservicios utilizando **Spring 
 
 ## 🐳 Construcción y Push de Imágenes Docker
 
-'''bash
+```bash
 minikube start --driver=docker
-'''bash
+
 
 # AuthService
+
+```bash
 cd authservice
 docker build -t mil0st4r/authservice:latest .
 docker push mil0st4r/authservice:latest
 cd ..
+'''bash
 
 # API Gateway
 cd ms-api-gateway
