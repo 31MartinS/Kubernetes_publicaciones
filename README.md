@@ -75,13 +75,12 @@ docker build -t mil0st4r/ms-sincronizacion:latest .
 docker push mil0st4r/ms-sincronizacion:latest
 cd ..
 
-## ☸️ Despliegue en Kubernetes
+### ☸️ Despliegue en Kubernetes
 
 A continuación, se detallan los pasos para desplegar todos los componentes en tu clúster de Minikube usando `kubectl`:
 
 ### 🐘 Base de Datos - CockroachDB
 
-```bash
 kubectl apply -f cockroachdb-deployment.yaml
 kubectl apply -f cockroachdb-service.yaml
 
