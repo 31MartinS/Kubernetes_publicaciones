@@ -34,15 +34,42 @@ Este proyecto implementa una arquitectura de microservicios utilizando **Spring 
 ```bash
 minikube start --driver=docker
 
-
 # AuthService
-
-```bash
 cd authservice
 docker build -t mil0st4r/authservice:latest .
 docker push mil0st4r/authservice:latest
 cd ..
-'''bash
+
+cd ms-api-gateway
+docker build -t mil0st4r/ms-api-gateway:latest .
+docker push mil0st4r/ms-api-gateway:latest
+cd ..
+
+cd ms-catalogo
+docker build -t mil0st4r/ms-catalogo:latest .
+docker push mil0st4r/ms-catalogo:latest
+cd ..
+
+cd ms-eureka-server
+docker build -t mil0st4r/ms-eureka-server:latest .
+docker push mil0st4r/ms-eureka-server:latest
+cd ..
+
+cd ms-notificaciones
+docker build -t mil0st4r/ms-notificaciones:latest .
+docker push mil0st4r/ms-notificaciones:latest
+cd ..
+
+cd ms-publicaciones
+docker build -t mil0st4r/ms-publicaciones:latest .
+docker push mil0st4r/ms-publicaciones:latest
+cd ..
+
+cd ms-sincronizacion
+docker build -t mil0st4r/ms-sincronizacion:latest .
+docker push mil0st4r/ms-sincronizacion:latest
+cd ..
+
 
 ### ☸️ Despliegue en Kubernetes
 
@@ -111,4 +138,3 @@ kubectl get pods
 kubectl port-forward svc/ms-api-gateway-svc 8000:8000
 
 http://localhost:8000/swagger-ui/index.html
-
