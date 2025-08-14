@@ -44,42 +44,6 @@ docker push mil0st4r/authservice:latest
 cd ..
 '''bash
 
-# API Gateway
-cd ms-api-gateway
-docker build -t mil0st4r/ms-api-gateway:latest .
-docker push mil0st4r/ms-api-gateway:latest
-cd ..
-
-# Catálogo
-cd ms-catalogo
-docker build -t mil0st4r/ms-catalogo:latest .
-docker push mil0st4r/ms-catalogo:latest
-cd ..
-
-# Eureka Server
-cd ms-eureka-server
-docker build -t mil0st4r/ms-eureka-server:latest .
-docker push mil0st4r/ms-eureka-server:latest
-cd ..
-
-# Notificaciones
-cd ms-notificaciones
-docker build -t mil0st4r/ms-notificaciones:latest .
-docker push mil0st4r/ms-notificaciones:latest
-cd ..
-
-# Publicaciones
-cd ms-publicaciones
-docker build -t mil0st4r/ms-publicaciones:latest .
-docker push mil0st4r/ms-publicaciones:latest
-cd ..
-
-# Sincronización
-cd ms-sincronizacion
-docker build -t mil0st4r/ms-sincronizacion:latest .
-docker push mil0st4r/ms-sincronizacion:latest
-cd ..
-
 ### ☸️ Despliegue en Kubernetes
 
 A continuación, se detallan los pasos para desplegar todos los componentes en tu clúster de Minikube usando `kubectl`:
@@ -92,6 +56,10 @@ kubectl apply -f cockroachdb-service.yaml
 ### Inicialización del cluster
 kubectl exec -it <nombre-del-pod> -- cockroach init --insecure --host=cockroachdb-svc
 
+cockroach init --insecure --host=cockroachdb-svc
+
+exit
+
 ### Acceso a CockroachDB desde Shell
 kubectl exec -it <nombre-del-pod> -- ./cockroach sql --insecure
 
@@ -100,6 +68,8 @@ CREATE DATABASE publicaciones_db;
 CREATE DATABASE authdb;
 CREATE DATABASE catalogo_db;
 CREATE DATABASE notificaciones_db;
+
+q\
 
 ### Instanciando el broker de mensajería
 kubectl apply -f rabbitmq-deployment.yml
@@ -130,9 +100,15 @@ kubectl apply -f ms-sincronizacion-deployment.yml
 kubectl apply -f ms-sincronizacion-service.yml
 
 ### API Gateway
+kubectl apply -f api-gateway-config.yaml
 kubectl apply -f ms-api-gateway-deployment.yml
 kubectl apply -f ms-api-gateway-service.yml
 
 ### Verificación del estado de los pods
 kubectl get pods
+
+### Comprobación de rutas con Swagger
+kubectl port-forward svc/ms-api-gateway-svc 8000:8000
+
+http://localhost:8000/swagger-ui/index.html
 
